@@ -1,0 +1,45 @@
+db.Student.insertMany([
+    { Roll_No: "A01", Name: "John", Class: "SE", Marks: 78, Address: "Street 1", Enrolled_Courses: ["DBMS", "Maths"] },
+    { Roll_No: "A02", Name: "Sara", Class: "SE", Marks: 85, Address: "Street 2", Enrolled_Courses: ["TOC", "DBMS"] },
+    { Roll_No: "A03", Name: "Mike", Class: "TE", Marks: 62, Address: "Street 3", Enrolled_Courses: ["Maths", "Physics"] },
+    { Roll_No: "A04", Name: "Anna", Class: "TE", Marks: 45, Address: "Street 4", Enrolled_Courses: ["TOC", "DBMS"] },
+    { Roll_No: "A05", Name: "David", Class: "BE", Marks: 90, Address: "Street 5", Enrolled_Courses: ["DBMS", "AI"] },
+    { Roll_No: "A06", Name: "Chris", Class: "TE", Marks: 30, Address: "Street 6", Enrolled_Courses: ["Maths", "OS"] },
+    { Roll_No: "A07", Name: "Emma", Class: "SE", Marks: 25, Address: "Street 7", Enrolled_Courses: ["DBMS", "TOC"] },
+    { Roll_No: "A08", Name: "Sophia", Class: "BE", Marks: 55, Address: "Street 8", Enrolled_Courses: ["AI", "OS"] },
+    { Roll_No: "A09", Name: "Liam", Class: "SE", Marks: 88, Address: "Street 9", Enrolled_Courses: ["TOC", "DBMS"] },
+    { Roll_No: "A10", Name: "Mia", Class: "TE", Marks: 45, Address: "Street 10", Enrolled_Courses: ["DBMS", "Maths"] }
+]);
+
+db.Student.find(
+    { Enrolled_Courses: {$all: ["DBMS","TOC"]}},
+    { Name: 1,_id:0}
+);
+
+db.Student.find(
+    { $or: [ { Marks: {$gt:50}}, {Class:"TE"}]},
+    { Roll_No:1, Class:1,_id:0}
+);
+
+db.Student.updateOne(
+    { Roll_No:"A10"},
+    {
+        $set:
+            {
+                Roll_No: "A11", 
+                Name: "Aarya", 
+                Class: "SE", 
+                Marks: 50, 
+                Address: "Street 11", 
+                Enrolled_Courses: ["TOC", "Maths"] 
+            }
+    }
+);
+
+db.Student.find({},{Name:1,_id:0}).sort({Marks:-1}).skip(2).limit(2);
+
+db.Student.deleteMany(
+    { Marks: { $lt:20}}
+);
+
+db.Student.deleteOne({});
